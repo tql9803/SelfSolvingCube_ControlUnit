@@ -23,7 +23,13 @@
 #include <string.h>
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
- 
+#include <QuadEncoder.h>
+
+#define EncA
+#define EncB
+#define EncVal 350
+
+QuadEncoder Enc1(1, EncA, EncB, 0); //New Quadrature Encoder Object
 
 void motorControl(char*instructions);
 void motorSelect(int side, char number_of_turns);
@@ -49,7 +55,9 @@ void setup() {
   uint8_t twbrbackup = TWBR;
   // must be changed after calling Wire.begin() (inside pwm.begin())
   TWBR = 12; // upgrade to 400KHz!
- 
+  
+  Enc.setInitConfig();
+  Enc.init();
 }
  
 void loop() {
